@@ -21,25 +21,19 @@ sub connected {
 }
 
 sub said {
-  my $self = shift;
-  my $message = shift;
-  my $body = $message->{body};
-  if($body eq ".cnstock")
-  {
-  $r=`/home/jqk/IRCbots/cnstock.sh`;
-#  $r=decode ('utf-8',$r);
-  $self->reply($message,$r);
-  }
   if($used==0){
   sleep 20;
   $used=1;
   return;
   }
+  my $self = shift;
+  my $message = shift;
+  my $body = $message->{body};
   if($body =~ /^\.bar/)
   {
   $used=0;
   @sp = split(/ /,$body);
-  $r=`/home/jqk/IRCbots/bar "$sp[1]" "$sp[2]"`;
+  $r=`/home/jqk/bar "$sp[1]" "$sp[2]"`;
 #  $r=decode ('utf-8',$r);
   $self->reply($message,$r);
   }else{

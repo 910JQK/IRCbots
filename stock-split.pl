@@ -10,7 +10,6 @@ use warnings;
 package bot;
 use base 'Bot::BasicBot';
 use Encode;
-$used=1;
 
 
 sub connected {
@@ -29,19 +28,6 @@ sub said {
   $r=`/home/jqk/IRCbots/cnstock.sh`;
 #  $r=decode ('utf-8',$r);
   $self->reply($message,$r);
-  }
-  if($used==0){
-  sleep 20;
-  $used=1;
-  return;
-  }
-  if($body =~ /^\.bar/)
-  {
-  $used=0;
-  @sp = split(/ /,$body);
-  $r=`/home/jqk/IRCbots/bar "$sp[1]" "$sp[2]"`;
-#  $r=decode ('utf-8',$r);
-  $self->reply($message,$r);
   }else{
   return;
   }
@@ -53,9 +39,9 @@ bot->new(
 channels => ["#linuxbar"] ,
 server => "irc.freenode.net" ,
 port => "6667",
-nick => "barbot_l",
-alt_nicks => ["barbot_l1", "barbot_l2"],
-username  => "L_barbot-test",
+nick => "stockbot_l",
+alt_nicks => ["stockbot_l1", "stockbot_l2"],
+username  => "L_stockbot-test",
 name      => "A bot that is testing"
 )->run();
 
