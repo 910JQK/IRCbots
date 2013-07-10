@@ -24,6 +24,10 @@ sub said {
   my $self = shift;
   my $message = shift;
   my $body = $message->{body};
+  if($body eq ".help barbot")
+  {
+  $self->reply($message,"BarBot - 幫助:\n .cnstock/滬深股指 | .bar 貼吧 條目數 | .bili 搜索字串 條目數 | 有10秒緩衝");
+  }
   if($body eq ".cnstock")
   {
   $r=`/home/jqk/IRCbots/cnstock.sh`;
@@ -38,20 +42,31 @@ sub said {
   if($body =~ /^\.bar/)
   {
   $used=0;
+  $body=decode ('utf-8',$body);
   @sp = split(/ /,$body);
   $r=`/home/jqk/IRCbots/bar "$sp[1]" "$sp[2]"`;
 #  $r=decode ('utf-8',$r);
   $self->reply($message,$r);
   }else{
-  return;
+    if($body =~ /^\.bili/)
+    {
+    $used=0;
+    $body=decode ('utf-8',$body);
+    @sp = split(/ /,$body);
+    $r=`'/home/jqk/IRCbots/bili.sh' "$sp[1]" "$sp[2]"`;
+#   $r=decode ('utf-8',$r);
+    $self->reply($message,$r);
+    }else{
+    return;
+    }
   }
 }
 
 package main;
 
 bot->new( 
-channels => ["#linuxbar"] ,
-server => "irc.freenode.net" ,
+channels => ["#linuxbar","#linuxba"] ,
+server => "chat.freenode.net" ,
 port => "6667",
 nick => "barbot_l",
 alt_nicks => ["barbot_l1", "barbot_l2"],
