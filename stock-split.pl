@@ -23,11 +23,17 @@ sub said {
   my $self = shift;
   my $message = shift;
   my $body = $message->{body};
+  if($body =~ /^.cnstock/){
   if($body eq ".cnstock")
   {
-  $r=`/home/jqk/IRCbots/cnstock.sh`;
-#  $r=decode ('utf-8',$r);
-  $self->reply($message,$r);
+      $r=`/home/jqk/IRCbots/cnstock.sh`;
+#  $r=decode ('utf-8',$r);                                                      
+      $self->reply($message,$r);
+  }else{
+      @sp = split(/ /,$body);
+      $r=`/home/jqk/IRCbots/cnstock.sh $sp[1]`;
+      $self->reply($message,$r);
+  }
   }else{
   return;
   }
