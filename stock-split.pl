@@ -34,6 +34,12 @@ sub said {
       $r=`/home/jqk/IRCbots/cnstock.sh $sp[1]`;
       $self->reply($message,$r);
   }
+  }
+  if($body eq ".usstock")
+  {
+  $r=`/home/jqk/IRCbots/usstock.sh`;
+#  $r=decode ('utf-8',$r);                                                      
+  $self->reply($message,$r);
   }else{
   return;
   }
