@@ -2,4 +2,5 @@
 a=${1:-linux}
 b=${2:-10}
 [ $b -gt 10 ] && b=10
-curl -s "http://tieba.baidu.com/f?kw=$a" | iconv -f GBK -t UTF-8 | grep '<a href="/p/[0-9]*"' | sed 's/<a href="//g;s/ target.*//g;s/" title="/ /g;s/"$//g;s/\/p\///;s:</a>::g;s/\t//g;s/&quot;/"/g;s/&lt;/</g;s/&gt;/>/g;s/&amp;/&/g;s/&reg;/®/g;s/&copy;/©/g;s/&trade;/™/g;s/<img class="icon_pre 该用户已成功获得妹纸认证" src="http:\/\/tb1.bdstatic.com\/tb\/static-encourage\/img\/meizhi\/meizhi_light.gif" \/>//g' | head -$b
+#curl -s "http://tieba.baidu.com/f?kw=$a" | iconv -f GBK -t UTF-8 | grep '<a href="/p/[0-9]*"' | sed 's/<a href="//g;s/ target.*//g;s/" title="/ /g;s/"$//g;s/\/p\///;s:</a>::g;s/\t//g;s/&quot;/"/g;s/&lt;/</g;s/&gt;/>/g;s/&amp;/&/g;s/&reg;/®/g;s/&copy;/©/g;s/&trade;/™/g;s/<img class="icon_pre 该用户已成功获得妹纸认证" src="http:\/\/tb1.bdstatic.com\/tb\/static-encourage\/img\/meizhi\/meizhi_light.gif" \/>//g' | head -"$b"
+curl -s "http://tieba.baidu.com/f?kw=$a" | iconv -f GBK -t UTF-8 | grep -oi \<a\ href=\"/p/.[^\<]* |sed 's/^<a href="//;s/" target.*//;s/^\/p\///;s/" title="/ /;s/&quot;/"/g;s/&lt;/</g;s/&gt;/>/g;s/&amp;/&/g;s/&reg;/®/g;s/&copy;/©/g;s/&trade;/™/g;s/<img class="icon_pre 该用户已成功获得妹纸认证" src="http:\/\/tb1.bdstatic.com\/tb\/static-encourage\/img\/meizhi\/meizhi_light.gif" \/>//g' | head -"$b"
