@@ -41,6 +41,21 @@ sub said {
   $self->reply($message,$r);
   }
   }
+
+  if($body =~ /^.dict/){
+  @sp = split(/ /,$body);
+  $r=`/home/jqk/IRCbots/ydcv-cut.sh dict $sp[1]`;
+  $self->reply($message,$r);
+  }
+  }
+
+  if($body =~ /^.dictweb/){
+  @sp = split(/ /,$body);
+  $r=`/home/jqk/IRCbots/ydcv-cut.sh web $sp[1]`;
+  $self->reply($message,$r);
+  }
+  }
+
   if($body eq ".usstock")
   {
   $r=`/home/jqk/IRCbots/usstock.sh`;
