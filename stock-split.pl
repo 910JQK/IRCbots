@@ -23,7 +23,7 @@ sub said {
   my $self = shift;
   my $message = shift;
   my $body = $message->{body};
-  if($body =~ /^.cnstock/){
+  if($body =~ /^\.cnstock/){
   if($body eq ".cnstock")
   {
       $r=`/home/jqk/IRCbots/cnstock.sh`;
@@ -35,7 +35,7 @@ sub said {
       $self->reply($message,$r);
   }
   }
-  if($body eq ".usstock")
+  if($body eq "\.usstock")
   {
   $r=`/home/jqk/IRCbots/usstock.sh`;
 #  $r=decode ('utf-8',$r);                                                      

@@ -29,7 +29,7 @@ sub said {
   $self->reply($message,"BarBot - 幫助:\n .cnstock/滬深股指 | .cnstock sh|sz股票代碼 (例:.cnstock sh600000) / 查詢個股 | .usstock/美國股指 | .bar 貼吧 條目數 | .bili 搜索字串 條目數 | 有10秒緩衝");
   }
 
-  if($body =~ /^.cnstock/){
+  if($body =~ /^\.cnstock/){
   if($body eq ".cnstock")
   {
   $r=`/home/jqk/IRCbots/cnstock.sh`;
@@ -42,21 +42,21 @@ sub said {
   }
   }
 
-  if($body =~ /^.dict/){
+  if($body =~ /^\.dict/){
   @sp = split(/ /,$body);
   $r=`/home/jqk/IRCbots/ydcv-cut.sh dict $sp[1]`;
   $self->reply($message,$r);
   }
   }
 
-  if($body =~ /^.dictweb/){
+  if($body =~ /^\.dictweb/){
   @sp = split(/ /,$body);
   $r=`/home/jqk/IRCbots/ydcv-cut.sh web $sp[1]`;
   $self->reply($message,$r);
   }
   }
 
-  if($body eq ".usstock")
+  if($body eq "\.usstock")
   {
   $r=`/home/jqk/IRCbots/usstock.sh`;
 #  $r=decode ('utf-8',$r);

@@ -23,14 +23,14 @@ sub said {
   my $self = shift;
   my $message = shift;
   my $body = $message->{body};
-  if($body =~ /^.dict/){
+  if($body =~ /^\.dict/){
       @sp = split(/ /,$body);
       $r=`/home/jqk/IRCbots/ydcv-cut.sh dict $sp[1]`;
       $self->reply($message,$r);
   }
 
 
-if($body =~ /^.dictweb/){
+if($body =~ /^\.dictweb/){
     @sp = split(/ /,$body);
     $r=`/home/jqk/IRCbots/ydcv-cut.sh web $sp[1]`;
     $self->reply($message,$r);
