@@ -11,6 +11,8 @@ package bot;
 use base 'Bot::BasicBot';
 use Encode;
 $used=1;
+$TC=0;
+$TC2=0;
 
 
 sub connected {
@@ -89,6 +91,38 @@ sub said {
     return;
     }
   }
+}
+
+sub tick {
+    $TC++;
+    $TC2++;
+#    print "TimeCount1:".$TC."\n";
+#    print "TimeCount2:".$TC2."\n";
+    if($TC==1800){
+	my $self = shift;
+	timer1($self);
+	$TC=0;
+    }
+    if($TC2==5400){
+	my $self = shift;
+	timer2($self);
+	$TC2=0;
+    }
+    return 1;
+}
+
+sub timer1 {
+#    print "debug:timer1\n";
+    $r=`/home/jqk/IRCbots/barget.sh linux 3`;
+#    $r=decode ('utf-8',$r);
+    $_[0]->notice(channel => '#linuxbar',body => $r);
+}
+
+sub timer2 {
+#    print "debug:timer2\n";
+    $r=`/home/jqk/IRCbots/barget.sh archlinux 3`;
+#    $r=decode ('utf-8',$r);
+    $_[0]->notice(channel => '#linuxbar',body => $r);
 }
 
 package main;
