@@ -111,15 +111,17 @@ sub tick {
 }
 
 sub timer1 {
+    my $r=" ";
 #    print "debug:timer1\n";
-    my $r=`/home/jqk/IRCbots/barget.sh linux 3`;
+    $r=`/home/jqk/IRCbots/barget.sh linux 3`;
 #    $r=decode ('utf-8',$r);
     $_[0]->say(channel => '#linuxba',body => $r);
 }
 
 sub timer2 {
+    my $r=" ";
 #    print "debug:timer2\n";
-   my $r=`/home/jqk/IRCbots/barget.sh archlinux 3`;
+    $r=`/home/jqk/IRCbots/barget.sh archlinux 3`;
 #    $r=decode ('utf-8',$r);
     $_[0]->say(channel => '#linuxba',body => $r);
 }
