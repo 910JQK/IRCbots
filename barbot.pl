@@ -20,6 +20,7 @@ sub connected {
   print STDERR $self->nick." connected\n";
 #  $self->join('#linuxbar');
   $self->say(channel => '#linuxbar', body => 'Hello, I am '.$self->nick);
+  timer1($self);
 }
 
 sub said {
@@ -111,16 +112,16 @@ sub tick {
 
 sub timer1 {
 #    print "debug:timer1\n";
-    $r=`/home/jqk/IRCbots/barget.sh linux 3`;
+    my $r=`/home/jqk/IRCbots/barget.sh linux 3`;
 #    $r=decode ('utf-8',$r);
-    $_[0]->notice(channel => '#linuxba',body => $r);
+    $_[0]->say(channel => '#linuxba',body => $r);
 }
 
 sub timer2 {
 #    print "debug:timer2\n";
-    $r=`/home/jqk/IRCbots/barget.sh archlinux 3`;
+   my $r=`/home/jqk/IRCbots/barget.sh archlinux 3`;
 #    $r=decode ('utf-8',$r);
-    $_[0]->notice(channel => '#linuxba',body => $r);
+    $_[0]->say(channel => '#linuxba',body => $r);
 }
 
 package main;
