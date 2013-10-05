@@ -97,15 +97,16 @@ sub tick {
     $TC2++;
 #    print "TimeCount1:".$TC."\n";
 #    print "TimeCount2:".$TC2."\n";
-    if($TC==1800){
+    if($TC==1800||$TC2==5400){
 	my $self = shift;
+    if($TC==1800){
 	timer1($self);
 	$TC=0;
     }
     if($TC2==5400){
-	my $self = shift;
 	timer2($self);
 	$TC2=0;
+    }
     }
     return 1;
 }
@@ -115,7 +116,7 @@ sub timer1 {
 #    print "debug:timer1\n";
     $r=`/home/jqk/IRCbots/barget.sh linux 3`;
 #    $r=decode ('utf-8',$r);
-    $_[0]->say(channel => '#linuxba',body => $r);
+    eval{$_[0]->say(channel => '#linuxba',body => $r)};
 }
 
 sub timer2 {
@@ -123,7 +124,7 @@ sub timer2 {
 #    print "debug:timer2\n";
     $r=`/home/jqk/IRCbots/barget.sh archlinux 3`;
 #    $r=decode ('utf-8',$r);
-    $_[0]->say(channel => '#linuxba',body => $r);
+    eval{$_[0]->say(channel => '#linuxba',body => $r)};
 }
 
 package main;
