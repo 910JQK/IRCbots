@@ -116,7 +116,7 @@ sub timer1 {
 #    print "debug:timer1\n";
     $r=`/home/jqk/IRCbots/barget.sh linux 3`;
 #    $r=decode ('utf-8',$r);
-    eval{$_[0]->say(channel => '#linuxba',body => $r)};
+    eval{$_[0]->say(channel => '#linuxbar',body => $r)};
 }
 
 sub timer2 {
@@ -124,7 +124,7 @@ sub timer2 {
 #    print "debug:timer2\n";
     $r=`/home/jqk/IRCbots/barget.sh archlinux 3`;
 #    $r=decode ('utf-8',$r);
-    eval{$_[0]->say(channel => '#linuxba',body => $r)};
+    eval{$_[0]->say(channel => '#linuxbar',body => $r)};
 }
 
 package main;
@@ -133,7 +133,7 @@ bot->new(
 channels => ["#linuxbar","#linuxba"] ,
 server => "chat.freenode.net" ,
 port => "6667",
-nick => "barbot_l",
+nick => "barbot_new",
 alt_nicks => ["barbot_l1", "barbot_l2"],
 username  => "L_barbot-test",
 name      => "A bot that is testing"
