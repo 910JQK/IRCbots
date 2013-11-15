@@ -19,7 +19,7 @@ sub connected {
   my $self = shift;
   print STDERR $self->nick." connected\n";
 #  $self->join('#linuxbar');
-  $self->say(channel => '#linuxbar', body => 'Hello, I am '.$self->nick);
+  $self->say(channel => '#linuxba', body => 'Hello, I am '.$self->nick);
   timer1($self);
 }
 
