@@ -135,7 +135,7 @@ server => "chat.freenode.net" ,
 port => "6667",
 nick => "barbot_new",
 alt_nicks => ["barbot_l1", "barbot_l2"],
-username  => "L_barbot-test",
+username  => "L_barbot-test_new",
 name      => "A bot that is testing"
 )->run();
 
