@@ -11,7 +11,6 @@ package bot;
 use base 'Bot::BasicBot';
 #use Encode;
 
-$logfile="IRClog";
 
 sub connected {
   $ENV{TZ}='UTC';
@@ -19,7 +18,6 @@ sub connected {
   print STDERR $self->nick." connected\n";
 #  $self->join('#linuxbar');
   $self->say(channel => '#linuxbar', body => 'Hello, I am '.$self->nick);
-  open(F,">>$logfile")
 }
 
 sub said {
@@ -30,7 +28,8 @@ sub said {
   my $who = $message->{who};
   my $rawnick = $message->{raw_nick};
   my $body = $message->{body};
-  print F "[SAID][$datestring][$channel] $rawnick/$who:$body";
+  print "[$channel][$datestring][SAID] [$rawnick][$who]:$body\n";
+  return 0;
 }
 
 sub chanjoin {
@@ -39,7 +38,8 @@ sub chanjoin {
   my $message = shift;
   my $channel_which = $message->{channel};
   my $whojoin = $message->{who};
-  print F "[INFO][$datestring] $whojoin Joined $channel_which";
+  print "[INFO][$datestring] $whojoin Joined $channel_which\n";
+  return 0;
 }
 
 sub userquit {
@@ -48,12 +48,14 @@ sub userquit {
   my $message = shift;
   my $whoquit = $message->{who};
   my $body_what = $message->{body};
-  print F "[INFO][$datestring] $whoquit Quit with message $body_what";
+  print "[INFO][$datestring] $whoquit Quit with message $body_what\n";
+  return 0;
 }
 
 package main;
 
 bot->new( 
+#channels => [ "#linuxbar" ],
 channels => ["#wecase" , "#linuxbar" , "#linuxba" , "##Orz" , "#ubuntu-cn" , "#archlinux-cn" , "#c_lang_cn"] ,
 server => "irc.freenode.net" ,
 port => "6667",
