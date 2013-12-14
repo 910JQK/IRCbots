@@ -28,7 +28,7 @@ sub said {
   my $who = $message->{who};
   my $rawnick = $message->{raw_nick};
   my $body = $message->{body};
-  print "[$channel][$datestring][SAID] [$rawnick][$who]:$body\n";
+  print STDERR "[$channel][$datestring][SAID] [$rawnick][$who]:$body\n";
   return 0;
 }
 
@@ -38,7 +38,7 @@ sub chanjoin {
   my $message = shift;
   my $channel_which = $message->{channel};
   my $whojoin = $message->{who};
-  print "[INFO][$datestring] $whojoin Joined $channel_which\n";
+  print STDERR "[INFO][$datestring] $whojoin Joined $channel_which\n";
   return 0;
 }
 
@@ -48,7 +48,7 @@ sub userquit {
   my $message = shift;
   my $whoquit = $message->{who};
   my $body_what = $message->{body};
-  print "[INFO][$datestring] $whoquit Quit with message $body_what\n";
+  print STDERR "[INFO][$datestring] $whoquit Quit with message $body_what\n";
   return 0;
 }
 
