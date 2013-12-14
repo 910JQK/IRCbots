@@ -11,7 +11,7 @@ package bot;
 use base 'Bot::BasicBot';
 #use Encode;
 
-$logfile="IRClog"
+$logfile="IRClog";
 
 sub connected {
   $ENV{TZ}='UTC';
