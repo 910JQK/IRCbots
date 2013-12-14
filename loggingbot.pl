@@ -11,7 +11,7 @@ package bot;
 use base 'Bot::BasicBot';
 #use Encode;
 
-$logdir=""
+$logfile="IRClog"
 
 sub connected {
   $ENV{TZ}='UTC';
@@ -19,7 +19,7 @@ sub connected {
   print STDERR $self->nick." connected\n";
 #  $self->join('#linuxbar');
   $self->say(channel => '#linuxbar', body => 'Hello, I am '.$self->nick);
-  open(F,">>IRClog")
+  open(F,">>$logfile")
 }
 
 sub said {
