@@ -9,6 +9,7 @@ use warnings;
 
 package bot;
 use base 'Bot::BasicBot';
+use Switch;
 use Encode;
 $used=1;
 $TC=0;
@@ -113,16 +114,25 @@ sub tick {
 
 sub timer1 {
     my $r=" ";
-#    print "debug:timer1\n";
-    $r=`/home/jqk/IRCbots/barget.sh linux 3`;
+    $r=`/home/jqk/IRCbots/barget.sh linux 4`;
+
 #    $r=decode ('utf-8',$r);
     eval{$_[0]->say(channel => '#linuxbar',body => $r)};
 }
 
 sub timer2 {
     my $r=" ";
-#    print "debug:timer2\n";
-    $r=`/home/jqk/IRCbots/barget.sh archlinux 3`;
+    my $what;
+    my $whichbar;
+    srand;
+    $what=int(rand(3));
+    switch($what){
+	case 1 { $whichbar = 'ubuntulinux' }
+	case 2 { $whichbar = 'debian' }
+	case 3 { $whichbar = 'c%e8%af%ad%e8%a8%80' }
+	else { $whichbar = 'archlinux' }
+    }
+    $r=`/home/jqk/IRCbots/barget.sh $whichbar 4`;
 #    $r=decode ('utf-8',$r);
     eval{$_[0]->say(channel => '#linuxbar',body => $r)};
 }
