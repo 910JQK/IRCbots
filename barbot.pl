@@ -9,12 +9,26 @@ use warnings;
 
 package bot;
 use base 'Bot::BasicBot';
+use HTML::TreeBuilder;
 use Switch;
 use Encode;
 $used=1;
 $TC=0;
 $TC2=0;
 
+
+sub barget {
+    $_[0] ~= s/\n//;
+    $p = HTML::TreeBuilder -> new_from_url($_[0]);
+    my @title= $p->look_down(_tag=>'h1',class=>'core_title_txt ')->as_text;
+    my @author= $p->look_down(_tag=>'li',class=>'d_name')->as_text;
+    my @content= $p->look_down(_tag=>'div',class=>'d_post_content j_d_post_content ')->as_text;
+    if(length($content[0])>=50){
+	$content[0]=substr($content[0],0,50).'...';
+    }
+    undef $p;
+    return $_[0]." 【".$title[0]."】 by".$author[0]."\n".$content[0];
+}
 
 sub connected {
   my $self = shift;
@@ -114,10 +128,10 @@ sub tick {
 
 sub timer1 {
     my $r=" ";
-    $r=`/home/jqk/IRCbots/barget.sh linux 4`;
-
+    $r=`/home/jqk/IRCbots/barget-no-regexp.sh linux 4`;
+    $R=barget($r);
 #    $r=decode ('utf-8',$r);
-    eval{$_[0]->say(channel => '#linuxbar',body => $r)};
+    eval{$_[0]->say(channel => '#linuxbar',body => $R)};
 }
 
 sub timer2 {
@@ -132,7 +146,8 @@ sub timer2 {
 	case 3 { $whichbar = 'c%e8%af%ad%e8%a8%80' }
 	else { $whichbar = 'archlinux' }
     }
-    $r=`/home/jqk/IRCbots/barget.sh $whichbar 4`;
+    $r=`/home/jqk/IRCbots/barget-no-regexp.sh $whichbar 4`;
+    $R=barget($r);
 #    $r=decode ('utf-8',$r);
     eval{$_[0]->say(channel => '#linuxbar',body => $r)};
 }
