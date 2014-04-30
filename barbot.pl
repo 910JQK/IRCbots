@@ -18,23 +18,23 @@ $TC2=0;
 
 
 sub barget {
-    $_[0] ~= s/\n//;
+    $_[0] =~ s/\n//;
     $p = HTML::TreeBuilder -> new_from_url($_[0]);
-    my @title= $p->look_down(_tag=>'h1',class=>'core_title_txt ')->as_text;
-    my @author= $p->look_down(_tag=>'li',class=>'d_name')->as_text;
-    my @content= $p->look_down(_tag=>'div',class=>'d_post_content j_d_post_content ')->as_text;
-    if(length($content[0])>=50){
-	$content[0]=substr($content[0],0,50).'...';
+    my @title= encode('utf-8', $p->look_down(_tag=>'h1',class=>'core_title_txt ')->as_text);
+    my @author= encode('utf-8', $p->look_down(_tag=>'li',class=>'d_name')->as_text);
+    my @content= encode('utf-8', $p->look_down(_tag=>'div',class=>'d_post_content j_d_post_content ')->as_text);
+    if(length($content[0])>=200){
+	$content[0]=substr($content[0],0,200).'...';
     }
     undef $p;
-    return $_[0]." 【".$title[0]."】 by".$author[0]."\n".$content[0];
+    return $_[0]." 【".$title[0]."】 by @".$author[0]."\n".$content[0];
 }
 
 sub connected {
   my $self = shift;
   print STDERR $self->nick." connected\n";
 #  $self->join('#linuxbar');
-  $self->say(channel => '#linuxba', body => 'Hello, I am '.$self->nick);
+  $self->say(channel => '#linuxbar', body => 'Hello, I am '.$self->nick);
   timer1($self);
 }
 
