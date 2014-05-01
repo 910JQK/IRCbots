@@ -20,6 +20,7 @@ $TC2=0;
 sub barget {
     $_[0] =~ s/\n//;
     $p = HTML::TreeBuilder -> new_from_url($_[0]);
+    eval{
     my @title= encode('utf-8', $p->look_down(_tag=>'h1',class=>'core_title_txt ')->as_text);
     my @author= encode('utf-8', $p->look_down(_tag=>'li',class=>'d_name')->as_text);
     my @content= encode('utf-8', $p->look_down(_tag=>'div',class=>'d_post_content j_d_post_content ')->as_text);
@@ -28,6 +29,7 @@ sub barget {
     }
     undef $p;
     return $_[0]." 【".$title[0]."】 by @".$author[0]."\n".$content[0];
+    }
 }
 
 sub connected {
