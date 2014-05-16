@@ -81,10 +81,12 @@ sub said {
   $self->reply($message,$r);
   }
 
-  if($body eq "\.content")
+  if($body =~ /^\.content/)
   {
   @sp = split(/ /,$body);
-  $r=barget("http://tieba.baidu.com/p/$sp[1]");
+  $g = "http://tieba.baidu.com/p/".$sp[1];
+  #print "content ".$g."\n";
+  $r=barget($g);
   $self->reply($message,$r);
   }
 
