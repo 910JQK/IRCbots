@@ -42,7 +42,7 @@ function handle_message(nick, channel, message){
 	    /* Run Script */
 	    sandbox.run(code, function(output){
 		/* Return Result */
-		bot.say(channel, output.result);
+		bot.say(channel, output.result+'');
 		/* Console Logs */
 		var console = output.console
 		for(var i=0; i<console.length; i++){
@@ -51,7 +51,7 @@ function handle_message(nick, channel, message){
 			bot.say(channel, "Cut at line " + lines_limit);
 			break;
 		    }
-		    bot.say(channel, output.console[i]);
+		    bot.say(channel, output.console[i]+'');
 		}
 	    });
 	}else{
