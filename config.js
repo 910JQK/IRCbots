@@ -21,6 +21,7 @@ exports.options = {
 }
 exports.command = {
     prefix:'@',
+    ping:"ping",
     eval:"js",
     help:"help"
 };

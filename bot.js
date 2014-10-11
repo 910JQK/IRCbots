@@ -26,6 +26,8 @@ function handle_message(nick, channel, message){
     /* Commands */
     if(head[0] == command("help")){
 	output_help(channel);
+    }else if(head[0] == command("ping")){
+	bot.say(channel, "pong");
     }else if(head[0] == command("eval")){
 	/* Lines Limit */
 	var lines_limit = default_limit;
