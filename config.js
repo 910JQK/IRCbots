@@ -1,5 +1,7 @@
 exports.server = "irc.freenode.net";
 exports.nick = "ProtonElectron";
+//exports.nick = "Hydrogen_Debug";
+exports.debug = true;
 exports.options = {
     userName: "jsbot",
     realName: "jsbot",
@@ -22,7 +24,8 @@ exports.options = {
 exports.command = {
     prefix:'@',
     ping:"ping",
-    eval:"js",
+    eval_js:"js",
+    eval_bf:"bf",
     help:"help"
 };
 exports.console = {
