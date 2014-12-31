@@ -24,12 +24,27 @@ exports.options = {
 exports.command = {
     prefix:'@',
     ping:"ping",
+    help:"help",
     eval_js:"js",
     eval_bf:"bf",
-    help:"help"
+    opencc:"opencc"
 };
 exports.console = {
     lines_limit: 3,
     max_limit: 10
+};
+exports.extra = {
+    'opencc':{
+	"enabled":true,
+	"configs":['s2t',
+		   't2s',
+		   's2tw',
+		   'tw2s',
+		   's2hk',
+		   'hk2s',
+		   's2twp',
+		   'tw2sp'
+		  ]
+    }
 };
 

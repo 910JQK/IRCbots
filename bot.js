@@ -8,6 +8,11 @@ var settings = require("./config.js");
 const default_limit = settings.console.lines_limit;
 const max_limit = settings.console.max_limit;
 
+/* Extra Modules */
+/* Note: Improve Implementation */
+if(settings.extra["opencc"].enabled)
+    var OpenCC = require("opencc");
+
 /* Body */
 function command(str){
     return (settings.command.prefix + settings.command[str]);
@@ -31,6 +36,7 @@ function handle_message(nick, channel, message){
     }
 
     /* Commands */
+    /* Note: Improve Implementation */
     if(head[0] == command("help")){
 	output_help(channel);
     }else if(head[0] == command("ping")){
@@ -83,6 +89,23 @@ function handle_message(nick, channel, message){
 	}else{
 	    output_help(channel);
 	}
+    }else if(head[0] == command("opencc") && OpenCC){
+	var configs = settings.extra["opencc"].configs;
+	var str = message.join(" ");
+	var result = "";
+	if(str){
+	    var config = "t2s.json";
+	    if(head[1])
+		if(configs.indexOf(head[1]) != -1)
+		    config = head[1] + ".json";
+	    var opencc = new OpenCC(config);
+	    result += opencc.convertSync(str);
+	}else{
+	    var i;
+	    for(i=0; i<configs.length; i++)
+		result += (configs[i] + " ");
+	}
+	bot.say(channel, result);
     }
 }
 
