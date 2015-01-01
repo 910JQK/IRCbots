@@ -53,8 +53,8 @@ function handle_message(nick, channel, message){
 	    /* Run Script */
 	    sandbox.run(code, function(output){
 		/* Return Result */
-		if(typeof output.result == "string")
-		    bot.say(channel, output.result.replace(null_regexp, ""));
+		var result;
+		bot.say(channel, output.result);
 		/* Console Logs */
 		var console = output.console
 		for(var i=0; i<console.length; i++){
@@ -63,8 +63,13 @@ function handle_message(nick, channel, message){
 			bot.say(channel, "Cut at line " + lines_limit);
 			break;
 		    }
-		    if(typeof console[i] == "string")
-			bot.say(channel, console[i].replace(null_regexp, ""));
+		    if(typeof console[i] == "string"){
+			result = console[i].replace(null_regexp, "");
+			if(result)
+			    bot.say(channel, result);
+			else
+			    bot.say(channel, "Empty or null");
+		    }
 		}
 	    });
 	}else {
