@@ -7,8 +7,7 @@ var Bf = require("./bf.js");
 var settings = require("./config.js");
 const default_limit = settings.console.lines_limit;
 const max_limit = settings.console.max_limit;
-const null_char = String.fromCharCode(0);
-const null_regexp = new RegExp(null_char, "g");
+const filter = new RegExp("[\\x00-\\x1F]", "g");
 
 /* Extra Modules */
 /* Note: Improve Implementation */
@@ -64,11 +63,11 @@ function handle_message(nick, channel, message){
 			break;
 		    }
 		    if(typeof console[i] == "string"){
-			result = console[i].replace(null_regexp, "");
+			result = console[i].replace(filter, "");
 			if(result)
 			    bot.say(channel, result);
 			else
-			    bot.say(channel, "Empty or null");
+			    bot.say(channel, "Empty or non-printable");
 		    }
 		}
 	    });
@@ -82,9 +81,9 @@ function handle_message(nick, channel, message){
 	if(code){
 	    var result;
 	    try {
-		result = Bf.eval(code).replace(null_regexp, "").split('\n');
+		result = Bf.eval(code).replace(filter, "").split('\n');
 		if(result.length == 1 && !result[0]){
-		    bot.say(channel, "No output or null");
+		    bot.say(channel, "No output or non-printable");
 		    return;
 		}
 	    } catch(err){
@@ -96,7 +95,11 @@ function handle_message(nick, channel, message){
 		    bot.say(channel, "Cut at line " + lines_limit);
 		    break;
 		}
-		bot.say(channel, result[i]+'');
+		result[i] = result[i].replace(filter, "");
+		if(result[i])
+		    bot.say(channel, result[i]);
+		else
+		    bot.say(channel, "Empty or non-printable");
 	    }
 	    /* Note: Repeated Part to be Merged */
 	}else{
