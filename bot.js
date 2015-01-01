@@ -62,13 +62,11 @@ function handle_message(nick, channel, message){
 			bot.say(channel, "Cut at line " + lines_limit);
 			break;
 		    }
-		    if(typeof console[i] == "string"){
-			result = console[i].replace(filter, "");
-			if(result)
-			    bot.say(channel, result);
-			else
-			    bot.say(channel, "Empty or non-printable");
-		    }
+		    result = (''+console[i]).replace(filter, "");
+		    if(result)
+			bot.say(channel, result);
+		    else
+			bot.say(channel, "Empty or non-printable");
 		}
 	    });
 	}else {
