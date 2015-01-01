@@ -7,6 +7,8 @@ var Bf = require("./bf.js");
 var settings = require("./config.js");
 const default_limit = settings.console.lines_limit;
 const max_limit = settings.console.max_limit;
+const null_char = String.fromCharCode(0);
+const null_regexp = new RegExp(null_char, "g");
 
 /* Extra Modules */
 /* Note: Improve Implementation */
@@ -51,7 +53,8 @@ function handle_message(nick, channel, message){
 	    /* Run Script */
 	    sandbox.run(code, function(output){
 		/* Return Result */
-		bot.say(channel, output.result+'');
+		if(typeof output.result == "string")
+		    bot.say(channel, output.result.replace(null_regexp, ""));
 		/* Console Logs */
 		var console = output.console
 		for(var i=0; i<console.length; i++){
@@ -60,7 +63,8 @@ function handle_message(nick, channel, message){
 			bot.say(channel, "Cut at line " + lines_limit);
 			break;
 		    }
-		    bot.say(channel, console[i]+'');
+		    if(typeof console[i] == "string")
+			bot.say(channel, console[i].replace(null_regexp, ""));
 		}
 	    });
 	}else {
@@ -73,7 +77,11 @@ function handle_message(nick, channel, message){
 	if(code){
 	    var result;
 	    try {
-		result = Bf.eval(code).split('\n');
+		result = Bf.eval(code).replace(null_regexp, "").split('\n');
+		if(result.length == 1 && !result[0]){
+		    bot.say(channel, "No output or null");
+		    return;
+		}
 	    } catch(err){
 		result = [];
 		result[0] = err;
