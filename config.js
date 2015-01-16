@@ -47,4 +47,6 @@ exports.extra = {
 		  ]
     }
 };
-
+exports.banlist = {
+    "geordi":true
+};

@@ -26,6 +26,9 @@ function output_help(channel){
 
 
 function handle_message(nick, channel, message){
+    if(Settings.banlist[nick])
+	return;
+
     var message = message.split(' ');
     var head = message.shift().split('.');
     
