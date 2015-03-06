@@ -1,4 +1,5 @@
-/* Brainfvck Language Interpreter */
+/* Brainfvck Programming Language Interpreter */
+
 
 const BUF_SIZE = 30000;
 const LOOP_LIMIT = 10000;
@@ -17,6 +18,7 @@ function check(str){
 	    if(stack[stack.length-1] == '['){
 		stack.pop();
 		pair_map[temp_map[stack.length]] = i;
+		pair_map[i] = temp_map[stack.length];
 	    }else{
 		throw "Syntax Error: Missing '['";
 	    }
@@ -39,40 +41,40 @@ exports.eval = function(str){
     var pair_map = check(str);
     var loop_count = 0;
 
-    function handle(left, right){
-	var i = left;
-	while(i < right){
-	    switch(str[i]){
-	        case '+':
-	            data[ptr]++;
-		    break;
-	        case '-':
-	            data[ptr]--;
-		    break;
-      	        case '>':
-	            ptr++;
-	            if(ptr == BUF_SIZE) ptr = 0;
-	            break;
-	        case '<':
-	            ptr--;
-	            if(ptr < 0) ptr = BUF_SIZE - 1;
-	            break;
-	        case '.':
-	            output += String.fromCharCode(data[ptr]);
-		    break;
-		case '[':
-		    while(data[ptr]){
-			handle(i+1, pair_map[i]);
-			if(++loop_count > LOOP_LIMIT)
-			    throw "Loop limit exceed";
-		    }
-		    i = pair_map[i];
+    var i = 0;
+    while(i < str.length){
+	switch(str[i]){
+	case '+':
+	    data[ptr]++;
+	    break;
+	case '-':
+	    data[ptr]--;
+	    break;
+      	case '>':
+	    ptr++;
+	    if(ptr == BUF_SIZE) ptr = 0;
+	    break;
+	case '<':
+	    ptr--;
+	    if(ptr < 0) ptr = BUF_SIZE - 1;
+	    break;
+	case '.':
+	    output += String.fromCharCode(data[ptr]);
+	    break;
+	case '[':
+	    if(!data[ptr])
+		i = pair_map[i];
+	    break;
+	case ']':
+	    if(data[ptr]){
+		i = pair_map[i];
+		if(++loop_count > LOOP_LIMIT)
+		    throw "Loop limit exceed";
 	    }
-	    i++;
+	    break;
 	}
+	i++;
     }
-
-    handle(0, str.length);
 
     return output;
 }
